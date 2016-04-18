@@ -20,7 +20,7 @@ $storeBalanceAttribute = Mage::getSingleton("eav/config")->getAttribute("custome
 
 $test = 1;
 
-if (null!==$storeBalanceAttribute->getId() {
+if (null!==$storeBalanceAttribute->getId()) {
         //attribute exists code here
         $storeBalanceAttribute = Mage::getSingleton("eav/config")->removeAttribute("customer", "storebalanceexportcsv");
 }
