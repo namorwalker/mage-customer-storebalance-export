@@ -12,11 +12,18 @@ $entityTypeId     = $setup->getEntityTypeId('customer');
 $attributeSetId   = $setup->getDefaultAttributeSetId($entityTypeId);
 $attributeGroupId = $setup->getDefaultAttributeGroupId($entityTypeId, $attributeSetId);
 
-$storeBalanceAttribute = Mage::getSingleton("eav/config")->removeAttribute("customer", "storebalanceexportcsv");
-$test = 1;
+
+
 
 //only add the custom attribute if it does not exist
+$storeBalanceAttribute = Mage::getSingleton("eav/config")->getAttribute("customer", "storebalanceexportcsv");
 
+$test = 1;
+
+if (null!==$storeBalanceAttribute->getId() {
+        //attribute exists code here
+        $storeBalanceAttribute = Mage::getSingleton("eav/config")->removeAttribute("customer", "storebalanceexportcsv");
+}
 
 
     $setup->addAttribute("customer", "storebalanceexportcsv",  array(
