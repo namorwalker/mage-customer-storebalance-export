@@ -85,14 +85,11 @@ foreach($customers as $customer){
     $currentCustomer->save();
 
 }
-
+*/
 
 
 
 $installer->endSetup();
-*/
-
-
 
 
 
