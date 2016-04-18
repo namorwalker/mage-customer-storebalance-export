@@ -1,6 +1,6 @@
 <?php
 
-/*
+
 
 $installer = $this;
 
@@ -13,20 +13,18 @@ $attributeSetId   = $setup->getDefaultAttributeSetId($entityTypeId);
 $attributeGroupId = $setup->getDefaultAttributeGroupId($entityTypeId, $attributeSetId);
 
 
-
-
 //only add the custom attribute if it does not exist
-$storeBalanceAttribute = Mage::getSingleton("eav/config")->getAttribute("customer", "storebalanceexportcsv");
+//$storeBalanceAttribute = Mage::getSingleton("eav/config")->getAttribute("customer", "storebalanceexportcsv");
 
-$test = 1;
+//$test = 1;
 
-if (null!==$storeBalanceAttribute->getId()) {
+/*if (null!==$storeBalanceAttribute->getId()) {
         //attribute exists code here
         $storeBalanceAttribute = Mage::getSingleton("eav/config")->removeAttribute("customer", "storebalanceexportcsv");
-}
+}*/
 
 
-    $setup->addAttribute("customer", "storebalanceexportcsv",  array(
+    $setup->addAttribute("customer", "storebalanceexportcsvx",  array(
         "type"     => "varchar",
         "backend"  => "",
         "label"    => "Store Balance (export) d",
@@ -43,20 +41,20 @@ if (null!==$storeBalanceAttribute->getId()) {
 
 
 //Mage::log($observer["customer"]["entity_id"]);
-    $attribute   = Mage::getSingleton("eav/config")->getAttribute("customer", "storebalanceexportcsv");
+    $attribute   = Mage::getSingleton("eav/config")->getAttribute("customer", "storebalanceexportcsvx");
 
-    Mage::log($attribute);
+    /*Mage::log($attribute);
     $setup->addAttributeToGroup(
         $entityTypeId,
         $attributeSetId,
         $attributeGroupId,
         'storebalanceexportcsv',
         '999'  //sort_order
-    );
+    );*/
 
     $used_in_forms=array();
 
-    $used_in_forms[]="adminhtml_customer";
+    //$used_in_forms[]="adminhtml_customer";
 //$used_in_forms[]="checkout_register";
 //$used_in_forms[]="customer_account_create";
 //$used_in_forms[]="customer_account_edit";
@@ -77,74 +75,16 @@ foreach($customers as $customer){
 
     $currentCustomer = Mage::getModel('customer/customer')->load($customer->getId());
 
-    $currentCustomer->setStorebalanceexportcsv("99");
+    $currentCustomer->setStorebalanceexportcsvx("99");
 
     //the original version of this answer was wrong; need to use the resource model.
-    $currentCustomer->getResource()->saveAttribute($currentCustomer,'storebalanceexportcsv');
+    $currentCustomer->getResource()->saveAttribute($currentCustomer,'storebalanceexportcsvx');
 
     $currentCustomer->save();
 
 }
 
 
-
-
-$installer->endSetup();
-*/
-
-
-
-
-
-$installer = $this;
-$installer->startSetup();
-$entity = $installer->getEntityTypeId('customer');
-
-if(!$installer->attributeExists($entity, 'storebalanceexportcsv')) {
-    $installer->removeAttribute($entity, 'storebalanceexportcsv');
-}
-
-    $installer->addAttribute("customer", "storebalanceexportcsv",  array(
-        "type"     => "varchar",
-        "backend"  => "",
-        "label"    => "Store Balance (export) d",
-        "input"    => "text",
-        "source"   => "",
-        "visible"  => true,
-        "required" => false,
-        "default" => "",
-        "frontend" => "",
-        "unique"     => false,
-        "note"       => "Store Balance (export) d"
-
-    ));
-
-
-$forms = array(
-    'adminhtml_customer',
-    'customer_account_edit'
-);
-
-$attribute = Mage::getSingleton('eav/config')->getAttribute($installer->getEntityTypeId('customer'), 'storebalanceexportcsv');
-$attribute->setData('used_in_forms', $forms);
-$attribute->save();
-
-
-//update the new attribute with customer store balance 
-$customers = Mage::getModel('customer/customer')->getCollection();
-
-foreach($customers as $customer){
-
-    $currentCustomer = Mage::getModel('customer/customer')->load($customer->getId());
-
-    $currentCustomer->setStorebalanceexportcsv("99");
-
-    //the original version of this answer was wrong; need to use the resource model.
-    $currentCustomer->getResource()->saveAttribute($currentCustomer,'storebalanceexportcsv');
-
-    $currentCustomer->save();
-
-}
 
 
 $installer->endSetup();

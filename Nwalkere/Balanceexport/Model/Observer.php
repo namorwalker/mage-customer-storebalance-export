@@ -25,10 +25,10 @@ Class Nwalkere_Balanceexport_Model_Observer{
                 //if (!$customer->getCustomattribute()) {
                 //if( $customer->getStorebalanceexportcsv() ){
 
-                    $customer->setStorebalanceexportcsv("999.99");
+                    $customer->setStorebalanceexportcsvx("999.99");
 
                     //the original version of this answer was wrong; need to use the resource model.
-                    $customer->getResource()->saveAttribute($customer,'storebalanceexportcsv');
+                    $customer->getResource()->saveAttribute($customer,'storebalanceexportcsvx');
                  //}
 
             }
