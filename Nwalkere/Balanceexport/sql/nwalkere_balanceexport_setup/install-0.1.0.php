@@ -12,11 +12,11 @@ $entityTypeId     = $setup->getEntityTypeId('customer');
 $attributeSetId   = $setup->getDefaultAttributeSetId($entityTypeId);
 $attributeGroupId = $setup->getDefaultAttributeGroupId($entityTypeId, $attributeSetId);
 
-$storeBalanceAttribute = Mage::getSingleton("eav/config")->getAttribute("customer", "storebalanceexportcsv");
+$storeBalanceAttribute = Mage::getSingleton("eav/config")->removeAttribute("customer", "storebalanceexportcsv");
 $test = 1;
 
 //only add the custom attribute if it does not exist
-if( !$storeBalanceAttribute->getId() ){
+
 
 
     $setup->addAttribute("customer", "storebalanceexportcsv",  array(
@@ -62,6 +62,20 @@ if( !$storeBalanceAttribute->getId() ){
         ->setData("is_visible", 1)
         ->setData("sort_order", 100);
     $attribute->save();
+
+//update the new attribute with customer store balance 
+$customers = Mage::getModel('customer/customer')->getCollection();
+
+foreach($customers as $customer){
+
+    $currentCustomer = Mage::getModel('customer/customer')->load($customer->getId());
+
+    $currentCustomer->setStorebalanceexportcsv("99");
+
+    //the original version of this answer was wrong; need to use the resource model.
+    $currentCustomer->getResource()->saveAttribute($currentCustomer,'storebalanceexportcsv');
+
+    $currentCustomer->save();
 
 }
 
