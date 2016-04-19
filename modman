@@ -1,3 +1,5 @@
 #modman test
-Nwalkere/*             app/code/local/Nwalkere/
-Nwalkere_Balanceexport.xml          app/etc/modules/Nwalkere_Balanceexport.xml
+app/code/local/Nwalkere/Balanceexport/                                        app/code/local/Nwalkere/Balanceexport/
+app/etc/modules/Nwalkere_Balanceexport.xml                                        app/etc/modules/Nwalkere_Balanceexport.xml
+
+
