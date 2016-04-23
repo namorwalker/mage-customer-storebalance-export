@@ -1,0 +1,20 @@
+{
+    "name": "namorwalker/mage-customer-storebalance-export",
+    "type": "magento-module",
+    "description": "Adds customer attr. and loads the store balance into it for csv export.",
+    "keywords":["magento","mvc","storebalance","export"],
+    "homepage":"https://github.com/namorwalker/mage-customer-storebalance-export",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Namor Walker",
+	    "email": "busterbiggins@hotmail.com",
+            "role": "developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.2.0",
+	 "magento-hackathon/magento-composer-installer":"*"
+    }
+}
+
