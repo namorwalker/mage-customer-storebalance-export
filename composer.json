@@ -11,9 +11,6 @@
 	    "email": "busterbiggins@hotmail.com",
             "role": "developer"
         }
-    ],
-    "require": {
-	 "magento-hackathon/magento-composer-installer":"*"
-    }
+    ]
 }
 
