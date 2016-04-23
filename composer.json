@@ -13,7 +13,6 @@
         }
     ],
     "require": {
-        "php": ">=5.2.0",
 	 "magento-hackathon/magento-composer-installer":"*"
     }
 }
