@@ -25,7 +25,14 @@ Class Nwalkere_Balanceexport_Model_Observer{
                 //if (!$customer->getCustomattribute()) {
                 //if( $customer->getStorebalanceexportcsv() ){
 
-                    $customer->setStorebalanceexportcsvx("999.99");
+
+		 $balanceModel = Mage::getModel('enterprise_customerbalance/balance')
+			->setCustomerId($customerId)
+			->loadByCustomer();
+
+        	    $balance = $balanceModel->getAmount();
+
+                    $customer->setStorebalanceexportcsvx($balance);
 
                     //the original version of this answer was wrong; need to use the resource model.
                     $customer->getResource()->saveAttribute($customer,'storebalanceexportcsvx');
