@@ -71,9 +71,17 @@ $customers = Mage::getModel('customer/customer')->getCollection();
 
 foreach($customers as $customer){
 
-    $currentCustomer = Mage::getModel('customer/customer')->load($customer->getId());
+    $customerId = $customer->getId();
 
-    $currentCustomer->setStorebalanceexportcsvx("9999");
+    $currentCustomer = Mage::getModel('customer/customer')->load($customerId);
+
+    $balanceModel = Mage::getModel('enterprise_customerbalance/balance')
+            ->setCustomerId($customerId)
+            ->loadByCustomer();
+
+    $balanceAmount = $model->getAmount();
+
+    $currentCustomer->setStorebalanceexportcsvx($balanceAmount);
 
     //the original version of this answer was wrong; need to use the resource model.
     $currentCustomer->getResource()->saveAttribute($currentCustomer,'storebalanceexportcsvx');
