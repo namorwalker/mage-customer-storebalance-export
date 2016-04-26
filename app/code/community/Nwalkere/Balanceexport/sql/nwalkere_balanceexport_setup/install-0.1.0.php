@@ -2,10 +2,6 @@
 
 //Installer adds a new custom customer attribute for storing customer balance
 
-//check if store balance is enabled
-if (!Mage::helper('enterprise_customerbalance')->isEnabled()) {
-     return;
-}
 
 $installer = $this;
 
