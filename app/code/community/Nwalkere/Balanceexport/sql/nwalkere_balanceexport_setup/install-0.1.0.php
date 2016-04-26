@@ -1,6 +1,11 @@
 <?php
 
+//Installer adds a new custom customer attribute for storing customer balance
 
+//check if store balance is enabled
+if (!Mage::helper('enterprise_customerbalance')->isEnabled()) {
+     return;
+}
 
 $installer = $this;
 
@@ -34,31 +39,16 @@ if( !$attribute_exists ){
 	    ));
 
 
-	//Mage::log($observer["customer"]["entity_id"]);
 	    $attribute   = Mage::getSingleton("eav/config")->getAttribute("customer", "storebalanceexportcsvx");
-
-	    /*Mage::log($attribute);
-	    $setup->addAttributeToGroup(
-		$entityTypeId,
-		$attributeSetId,
-		$attributeGroupId,
-		'storebalanceexportcsv',
-		'999'  //sort_order
-	    );*/
 
 	    $used_in_forms=array();
 
-	    //$used_in_forms[]="adminhtml_customer";
-	//$used_in_forms[]="checkout_register";
-	//$used_in_forms[]="customer_account_create";
-	//$used_in_forms[]="customer_account_edit";
-	//$used_in_forms[]="adminhtml_checkout";
 
 	    $attribute->setData("used_in_forms", $used_in_forms)
 		->setData("is_used_for_customer_segment", true)
 		->setData("is_system", 0)
 		->setData("is_user_defined", 1)
-		->setData("is_visible", 1)
+		->setData("is_visible", 0)
 		->setData("sort_order", 100);
 	    $attribute->save();
 
@@ -75,13 +65,22 @@ foreach($customers as $customer){
 
     $currentCustomer = Mage::getModel('customer/customer')->load($customerId);
 
+    $websiteId = $currentCustomer->getWebsiteId();
+
     $balanceModel = Mage::getModel('enterprise_customerbalance/balance')
-            ->setCustomerId($customerId)
-            ->loadByCustomer();
+    	     ->setCustomerId($customerId)
+             ->setWebsiteId($websiteId)
+             ->loadByCustomer();
 
-    $balanceAmount = $model->getAmount();
+    // check if balance found
+    if (!$balanceModel->getId()) {
+          $balance = (float) 0;
+    }else{
 
-    $currentCustomer->setStorebalanceexportcsvx($balanceAmount);
+          $balance = $balanceModel->getAmount();
+     }
+
+    $currentCustomer->setStorebalanceexportcsvx($balance);
 
     //the original version of this answer was wrong; need to use the resource model.
     $currentCustomer->getResource()->saveAttribute($currentCustomer,'storebalanceexportcsvx');
