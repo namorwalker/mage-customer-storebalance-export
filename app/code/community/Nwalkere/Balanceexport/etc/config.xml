@@ -12,6 +12,11 @@
                 <resourceModel>nwalkere_balanceexport_mysql4</resourceModel>
             </nwalkere_balanceexport>
         </models>
+	 <helpers>
+            <balanceexport>
+                <class>Nwalkere_Balanceexport_Helper</class>
+            </balanceexport>
+        </helpers>
         <resources>
             <nwalkere_balanceexport_setup>
                 <setup>
