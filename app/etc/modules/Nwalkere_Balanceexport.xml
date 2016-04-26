@@ -3,7 +3,7 @@
     <modules>
         <Nwalkere_Balanceexport>
             <active>true</active>
-            <codePool>local</codePool>
+            <codePool>community</codePool>
             <version>0.1.0</version>
         </Nwalkere_Balanceexport>
     </modules>
