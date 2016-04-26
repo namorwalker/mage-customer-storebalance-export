@@ -7,19 +7,19 @@ $installer = $this;
 
 $installer->startSetup();
 
-$setup = new Mage_Eav_Model_Entity_Setup('core_setup');
+//$installer = new Mage_Eav_Model_Entity_Setup('core_setup');
 
 //only add the custom attribute if it does not exist
-$attribute_exists = $setup->attributeValueExists("customer", "storebalanceexportcsvx");
+$attribute_exists = $installer->attributeValueExists("customer", "storebalanceexportcsvx");
 
 if( !$attribute_exists ){
 
-	$entityTypeId     = $setup->getEntityTypeId('customer');
-	$attributeSetId   = $setup->getDefaultAttributeSetId($entityTypeId);
-	$attributeGroupId = $setup->getDefaultAttributeGroupId($entityTypeId, $attributeSetId);
+	$entityTypeId     = $installer->getEntityTypeId('customer');
+	$attributeSetId   = $installer->getDefaultAttributeSetId($entityTypeId);
+	$attributeGroupId = $installer->getDefaultAttributeGroupId($entityTypeId, $attributeSetId);
 
 
-	    $setup->addAttribute("customer", "storebalanceexportcsvx",  array(
+	    $installer->addAttribute("customer", "storebalanceexportcsvx",  array(
 		"type"     => "varchar",
 		"backend"  => "",
 		"label"    => "Store Balance (export) d",
