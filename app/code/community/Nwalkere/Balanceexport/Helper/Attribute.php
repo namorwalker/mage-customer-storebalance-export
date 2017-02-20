@@ -66,9 +66,7 @@ class Nwalkere_Balanceexport_Helper_Attribute extends Mage_Core_Helper_Abstract
             $customerBalanceDataIndexed[$customerBalanceData[$key]['customer_id']] = $customerBalanceData[$key];
         }
 
-
-
-        Mage::getSingleton('core/session')->addNotice('');
+        
 
         $customerBalancesCollection = null;
 
