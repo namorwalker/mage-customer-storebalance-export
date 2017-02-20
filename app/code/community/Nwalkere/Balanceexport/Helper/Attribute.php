@@ -53,6 +53,12 @@ class Nwalkere_Balanceexport_Helper_Attribute extends Mage_Core_Helper_Abstract
             ->loadData();
 
         $customerBalanceData = $customerBalancesCollection->getData();
+
+        if (empty($customerBalanceData)) {
+            // list is empty - no customer balance data found...
+            return;
+        }
+
         $customerBalanceDataIndexed = array();
 
         foreach ( $customerBalanceData as $key=>$val )
@@ -60,20 +66,36 @@ class Nwalkere_Balanceexport_Helper_Attribute extends Mage_Core_Helper_Abstract
             $customerBalanceDataIndexed[$customerBalanceData[$key]['customer_id']] = $customerBalanceData[$key];
         }
 
+
+
+        Mage::getSingleton('core/session')->addNotice('');
+
         $customerBalancesCollection = null;
 
         foreach($customers as $customer){
 
             $customerId = $customer->getId();
 
-            $existingBalance = $customerBalanceDataIndexed[$customerId]['amount'];
+            if($customerBalanceDataIndexed[$customerId]['amount']){
+                $existingBalance = $customerBalanceDataIndexed[$customerId]['amount'];
+
+            }else{
+                $existingBalance = null;
+
+            }
+
             $csvxBalance = $customer->getStorebalanceexportcsvx();
 
 
-            if( $existingBalance !=  $csvxBalance ||  !is_float($csvxBalance) ){
-                $customer->setStorebalanceexportcsvx($existingBalance);
-                $customer->getResource()->saveAttribute($customer,'storebalanceexportcsvx');
+            if($existingBalance != null){
+
+                if( $existingBalance !=  $csvxBalance ){
+                    $customer->setStorebalanceexportcsvx($existingBalance);
+                    $customer->getResource()->saveAttribute($customer,'storebalanceexportcsvx');
+                }
+
             }
+
 
         }
 
