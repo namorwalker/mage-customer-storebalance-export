@@ -49,24 +49,19 @@ class Nwalkere_Balanceexport_Helper_Attribute extends Mage_Core_Helper_Abstract
             ->addAttributeToSelect('entity_id');
 
         $customerBalancesCollection = Mage::getModel('enterprise_customerbalance/balance')
-            ->getCollection()
-            ->loadData();
+            ->getCollection();
 
-        $customerBalanceData = $customerBalancesCollection->getData();
+        $customersWithBalance = $customerBalancesCollection->getSize();
 
-        if (empty($customerBalanceData)) {
-            // list is empty - no customer balance data found...
+        if($customersWithBalance < 1){
             return;
         }
 
-        $customerBalanceDataIndexed = array();
+        $customerBalanceData = array();
 
-        foreach ( $customerBalanceData as $key=>$val )
-        {
-            $customerBalanceDataIndexed[$customerBalanceData[$key]['customer_id']] = $customerBalanceData[$key];
+        foreach($customerBalancesCollection as $customerBal){
+            $customerBalanceData[$customerBal->getCustomerId()] = $customerBal->getAmount();
         }
-
-        
 
         $customerBalancesCollection = null;
 
@@ -74,8 +69,8 @@ class Nwalkere_Balanceexport_Helper_Attribute extends Mage_Core_Helper_Abstract
 
             $customerId = $customer->getId();
 
-            if($customerBalanceDataIndexed[$customerId]['amount']){
-                $existingBalance = $customerBalanceDataIndexed[$customerId]['amount'];
+            if($customerBalanceData[$customerId]){
+                $existingBalance = $customerBalanceData[$customerId];
 
             }else{
                 $existingBalance = null;
